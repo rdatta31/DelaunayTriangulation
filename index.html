@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+</head>
+
+<body><br>
+
+		<div class = "sidenav">
+
+			<h4 align = "center"> Computing Volume Fractions of Cut Cells using Delaunay Triangulation </h4>
+			
+
+				
+				<div class = "foot">
+					<p align="center">  Rishabh Datta is a 4th Year Mechanical Engineering student at Georgia Tech, Atlanta. Rishabh is interested in Energy and Fluid Systems, CFD and renewable technology. For more projects, 
+					<a href="https://rdatta31.github.io/">click here.</a>
+
+					</p>
+				</div>
+
+			</div>
+
+
+		<div class = "main">
+
+			<div class = "top">
+				<h4 align = "center"> Computing Volume Fractions of Cut Cells using Delaunay Triangulation </h4>
+	
+				
+					<p align="center">  Rishabh Datta is a 4th Year Mechanical Engineering student at Georgia Tech, Atlanta. Rishabh is interested in Energy and Fluid Systems, CFD and renewable technology. For more projects, 
+					<a href="https://rdatta31.github.io/">click here.</a>
+
+					</p>
+				</div><br>
+
+
+
+	
+	<h1> Computing Cut Cell Apertures, Interface Area and Volume Fraction </h1><br>
+	<h2> Introduction </h2>
+	
+	<p> In multiphase flows, the interface between two fluids can be expressed using a level set function, which is a signed scalar function <span lang="latex">\Phi(x,t)</span> such that <span lang="latex">| \triangledown \Phi | =  1</span>. One of the fluids can be defined as the positive phase, i.e.  <span lang="latex">\Phi (x,t)  > 0</span> , and the other is defined as the negative phase i.e. <span lang="latex">\Phi (x,t)  < 0</span>. The interface between the two fluids <span lang="latex">\Gamma</span>is represented by the zero level set,  <span lang="latex">\Phi (x,t)  = 0</span>. A cut cell can be defined as a cell that contains the local interface. In this report, we assume a sharp interface, i.e. each cell is cut by the interface only once. The volume fraction of the cell can be determined from the cell face apertures, the interface area <span lang="latex">\Delta \Gamma </span> and the level set values at the cell center. </p>
+
+	<h2> Delaunay Triangulation </h2>
+
+	<p> The interface area <span lang="latex">\Delta \Gamma</span> and the cell face apertures can be calculated using Delaunay triangulation, by diving the total area into a set of triangles. The sum of the areas of each triangle is then the total enclosed area. In Delaunay triangulation, individual triangles are formed such that they conform with the following criteria: </p>
+
+	<ul>
+		<li>The triangles are empty. No other vertices or edges can be contained in an individual triangle.</li>
+		<li>The circumcircle of each triangle is empty. No other vertices belonging to other elements of the set can be contained in the circumcircle.</li>
+	</ul>
+
+	<p> To check if a triangle is empty, it is necessary to determine of a potential edge of a new triangle intersects with  edges of existing triangles. In 3-D, the point of intersection <span lang="latex">P(x,y,z) </span> of two lines <i>AB</i> and <i>CD</i> (representing the potential edge and an existing edge) can be determined by solving the parametric line equations in <span lang="latex"> R^{3}</span>. </p>
+
+	<div align="center" lang="latex">
+		\begin{bmatrix}
+ x \\ y \\ z \end{bmatrix} = 
+ \begin{bmatrix}
+  x_{1} \\ y_{1} \\ z_{1} \end{bmatrix} + t1 
+           \begin{bmatrix}
+            x_{2} - x_{1}  \\  y_{2}  -  y_{1}  \\  z_{2}  - z_{1} \end{bmatrix} 
+            = 
+ \begin{bmatrix}
+  x_{3} \\ y_{3} \\ z_{3} \end{bmatrix} + t2 
+           \begin{bmatrix}
+            x_{4} - x_{3}  \\  y_{4}  -  y_{3}  \\  z_{4}  - z_{3} \end{bmatrix} 
+
+	</div>
+
+	<p>Given that <i>AB$</i> and <i>CD</i> are not skew or parallel, the two edges intersect if P lies along both edges. </p>
+
+<p>To check if the circumcircle of <span lang="latex">$\Delta ABC$ </span> is empty, it is necessary to determine the circumcenter <span lang="latex">$Q(x_{c},y_{c},z_{c})$ </span> of <span lang="latex">$\Delta ABC$ </span>. The circumcenter is the point which is equidistant from vertices <i>A</i>, <i>B</i> and <i>C</i>. In <span lang="latex"> R^{3}</span>, the circumcenter of a triangleis given by teh equation below. The radius <i>r</i> of the circumcircle can then be determined form the Euclidian norm of the vector connecting the center $Q$ to one of the triangle vertices. A point <i>P</i> lies inside the circumcircle if the Euclidian norm of <span lang="latex"> $\overrightarrow{PQ}$</span>. is less than the radius of the circumcircle. The circumcircle is considered not empty in this case. </p>
+
+
+<div align="center" lang="latex">
+	\overrightarrow{OQ} =\overrightarrow{ OA} + \frac{|\overrightarrow{AC}| ^{2} [ (\overrightarrow{AB} \times \overrightarrow{AC})  \times \overrightarrow{AB} ] + | \overrightarrow{AB}| ^{2} [ \overrightarrow{AC} \times (\overrightarrow{AB}  \times \overrightarrow{AC}) ]} {2 |\overrightarrow{AB} \times \overrightarrow{AC}|^{2}}
+\label{eq:circum}
+</div>
+
+<div align="center" lang="latex">
+r = | \overrightarrow{AQ} | = | \overrightarrow{BQ} | = | \overrightarrow{CQ} |
+
+	</div>
+
+	<h2> Level Set Values at Cell Corners and Determining Cut Points </h2>
+
+	<p>The level set values at cell corners can be determined from the arithmetic mean of the level set values at the cell centers of the surrounding cells. From the level set values at cell corners, the position of the cut points in a cut cell can be determined by linear interpolation.For a given edge enclosed by corners <i>A</i> and <i>B</i>, the level set values at  <span lang="latex">$A(x_{1},y_{1},z_{1})$</span> and <span lang="latex">$B(x_{2},y_{2},z_{2})$</span>  can be represented by <span lang="latex">$\Phi_{1} $ </span> and <span lang="latex">$\Phi_{2} $ </span>respectively. If <span lang="latex">$ \Phi_{1}\Phi_{2} < 0 $ </span>, then a cut point lies on the given edge. The coordinates of the cut point are given by: </p>
+
+	<div align="center" lang="latex">
+\begin{bmatrix} x \\ y \\ z \end{bmatrix}
+= \begin{bmatrix} \gamma (y_{2} - y_{1}) \\ \gamma (y_{2} - y_{1})  \\ \gamma (z_{2} - z_{1})  \end{bmatrix}
+
+	</div>
+
+<div align="center" lang="latex">
+ \gamma =  \frac{-\Phi_{1}}{\Phi_{2} - \Phi_{1}}
+
+	</div>
+
+	<h2> Cell Volume Fraction </h2>
+
+	<p> The volume fraction and cell face apertures are computed with respect to the positive fluid. From the cell face apertures and level set value at cell center <span lang="latex">$\Phi_{c}$ </span>, the volume fraction <span lang="latex">\alpha </span> can be calculated as:</p>
+
+		<div align="center" lang="latex">
+
+\alpha =   \frac{1}{\Delta x \Delta y \Delta z}  [ \frac{1}{3} A^{11}\Delta y \Delta z  \frac{\Delta x}{2} + \frac{1}{3} A^{12}\Delta y \Delta z \frac{\Delta x}{2} + \frac{1}{3} A^{21}\Delta x \Delta z \frac{\Delta y}{2}  \\ 
++ \frac{1}{3} A^{22}\Delta x \Delta z \frac{\Delta y}{2}+ \frac{1}{3} A^{31}\Delta x \Delta y \frac{\Delta z}{2}+ \frac{1}{3} A^{32}\Delta x \Delta y\frac{\Delta z}{2}+  \frac{1}{3} \Delta \Gamma \ \Phi_{c}]
+
+
+	</div>
+
+	<p> <span lang="latex">$A^{11}$</span> and <span lang="latex">$A^{12}$</span>   are the cell face apertures on the west and east faces respectively, <span lang="latex">$A^{21}$</span>  and <span lang="latex">$A^{22}$ </span>   are the cell face apertures on the south and north faces respectively, and <span lang="latex">$A^{31}$</span>  and <span lang="latex">$A^{32}$</span>   are the cell face apertures on the bottom and top faces respectively. </p>
+
+	<h2> Methodology </h2>
+
+	<p>The cut points were first determined for the given cut cell from the level set values at the cell corners. The cut points were then triangulated to determine the local interface area  . The cut points are shown in the figure below.</p>
+
+	<p>To triangulate a set of co-planar points in <span lang="latex">$R^{3}$</span>, the Divide and Conquer algorithm was used. The points to be triangulated were first sorted lexicologically, i.e. they were first sorted by x-coordinate, then by y-coordinate and then by z-coordinate. For a sharp interface, the interface cuts the cell at at most 4 points. These points are then divided into two subsets. Subset 1 contains the first two points after lexicological sorting, and the Subset 2 contains the remaining points. In each subset, the points are then connected separately. The two subsets are then merged. In order to merge the subsets, the low tangent is first identified. The low tangent connects the ``lowest'' points in each subset. The lowest points can be identified by sorting the points in each subset clockwise with respect to the plane normal, then starting form the first point in Subset 1, and moving anti-clockwise to the next point until the next point lies in Subset 2. Similarly, the lowest point in Subset 2 is identified by moving clockwise form the last point in Subset 2, until the next point lies in Subset 1. Given the geometry of the cut points, the low tangent can be determined by connecting the first point in Subset 1 to the point in Subset 2 which lies closest to it. </p>
+
+<p>On forming the low tangent, it is necessary to identify the third vertex to form a Delaunay triangle.  Of the two possible candidates for the third vertex, the candidate is chosen for which the new triangle and its circumcenter are empty, thus fulfilling the Delaunay criterion. The last point is then connected to the existing edge to create another triangle. The sum of the areas of each individual triangle is used to determine the interface area. </p>
+
+<p>For a given face, the maximum number of points to triangulate is 5 due to the geometry of the cut face. The aforementioned Divide and Conquer algorithm can be used for this purpose. In the case of five points, Subset 1 contains the first 3 points in lexicological order, while Subset 2 contains the remaining points. The points on the edge of the triangle in Subset 1 which should be used to form the low tangent can be determined by identifying the edge for which a potential low tangent does no intersect with any existing edges. The triangulation can then be continued as mention before. </p>
+
+	<h2> Implementation </h2>
+
+	The method presented was used to determine the cell volume fraction and cell face apertures. For greater accuracy, a given cell was refined once, and the cell volume fraction was determined from the arithmetic mean of the cell volume fractions of each sub cell. In 3D, each cell was divided into 8 subcells, and the sub cell volume fraction of each individual cell was first computed. Similarly in 2D, each cell was divided into 4 sub cells, and in 1D, each cell was divided into 2 sub cells. Each parent cell was also assumed to have a cell size of 2, with the cell center located at (1,1,1). Each sub cell center was then determined by iteratively travelling a distance of <span lang="latex">$(0.25 \times \textrm{cell size)}$</span> in the <span lang="latex">$\pm x</span>, <span lang="latex">$\pm y</span> and <span lang="latex">$\pm z</span> directions from the cell center. The cell corners of a given sub cell were then determined similarly, by moving a distance of <span lang="latex">$(0.5 \times \textrm{sub cell size)}$</span> in the <span lang="latex">$\pm x</span>, <span lang="latex">$\pm y</span> and <span lang="latex">$\pm z</span> directions from the sub cell center. 
+			
+
+		</div>
+		
+
+
+			</body>
+			</html>
