@@ -53,7 +53,7 @@
 		<li>The circumcircle of each triangle is empty. No other vertices belonging to other elements of the set can be contained in the circumcircle.</li>
 	</ul>
 
-	<p> To check if a triangle is empty, it is necessary to determine of a potential edge of a new triangle intersects with  edges of existing triangles. In 3-D, the point of intersection <span lang="latex">P(x,y,z) </span> of two lines <i>AB</i> and <i>CD</i> (representing the potential edge and an existing edge) can be determined by solving the parametric line equations in <span lang="latex"> R^{3}</span>. </p>
+	<p> To check if a triangle is empty, it is necessary to determine if a potential edge of a new triangle intersects with  edges of existing triangles. In 3-D, the point of intersection <span lang="latex">P(x,y,z) </span> of two lines <i>AB</i> and <i>CD</i> (representing the potential edge and an existing edge) can be determined by solving the parametric line equations in <span lang="latex"> R^{3}</span>. </p>
 
 	<div align="center" lang="latex">
 		\begin{bmatrix}
@@ -70,9 +70,9 @@
 
 	</div>
 
-	<p>Given that <i>AB$</i> and <i>CD</i> are not skew or parallel, the two edges intersect if P lies along both edges. </p>
+	<p>Given that <i>AB</i> and <i>CD</i> are not skew or parallel, the two edges intersect if P lies along both edges. </p>
 
-<p>To check if the circumcircle of <span lang="latex">$\Delta ABC$ </span> is empty, it is necessary to determine the circumcenter <span lang="latex">$Q(x_{c},y_{c},z_{c})$ </span> of <span lang="latex">$\Delta ABC$ </span>. The circumcenter is the point which is equidistant from vertices <i>A</i>, <i>B</i> and <i>C</i>. In <span lang="latex"> R^{3}</span>, the circumcenter of a triangleis given by teh equation below. The radius <i>r</i> of the circumcircle can then be determined form the Euclidian norm of the vector connecting the center $Q$ to one of the triangle vertices. A point <i>P</i> lies inside the circumcircle if the Euclidian norm of <span lang="latex"> $\overrightarrow{PQ}$</span>. is less than the radius of the circumcircle. The circumcircle is considered not empty in this case. </p>
+<p>To check if the circumcircle of <span lang="latex">$\Delta ABC$ </span> is empty, it is necessary to determine the circumcenter <span lang="latex">$Q(x_{c},y_{c},z_{c})$ </span> of <span lang="latex">$\Delta ABC$ </span>. The circumcenter is the point which is equidistant from vertices <i>A</i>, <i>B</i> and <i>C</i>. In <span lang="latex"> R^{3}</span>, the circumcenter of a triangleis given by the equation below. The radius <i>r</i> of the circumcircle can then be determined form the Euclidian norm of the vector connecting the center $Q$ to one of the triangle vertices. A point <i>P</i> lies inside the circumcircle if the Euclidian norm of <span lang="latex"> $\overrightarrow{PQ}$</span>. is less than the radius of the circumcircle. The circumcircle is considered not empty in this case. </p>
 
 
 <div align="center" lang="latex">
@@ -87,7 +87,7 @@ r = | \overrightarrow{AQ} | = | \overrightarrow{BQ} | = | \overrightarrow{CQ} |
 
 	<h2> Level Set Values at Cell Corners and Determining Cut Points </h2>
 
-	<p>The level set values at cell corners can be determined from the arithmetic mean of the level set values at the cell centers of the surrounding cells. From the level set values at cell corners, the position of the cut points in a cut cell can be determined by linear interpolation.For a given edge enclosed by corners <i>A</i> and <i>B</i>, the level set values at  <span lang="latex">$A(x_{1},y_{1},z_{1})$</span> and <span lang="latex">$B(x_{2},y_{2},z_{2})$</span>  can be represented by <span lang="latex">$\Phi_{1} $ </span> and <span lang="latex">$\Phi_{2} $ </span>respectively. If <span lang="latex">$ \Phi_{1}\Phi_{2} < 0 $ </span>, then a cut point lies on the given edge. The coordinates of the cut point are given by: </p>
+	<p>The level set values at cell corners can be determined from the arithmetic mean of the level set values at the cell centers of the surrounding cells. From the level set values at cell corners, the position of the cut points in a cut cell can be determined by linear interpolation. For a given edge enclosed by corners <i>A</i> and <i>B</i>, the level set values at  <span lang="latex">$A(x_{1},y_{1},z_{1})$</span> and <span lang="latex">$B(x_{2},y_{2},z_{2})$</span>  can be represented by <span lang="latex">$\Phi_{1} $ </span> and <span lang="latex">$\Phi_{2} $ </span>respectively. If <span lang="latex">$ \Phi_{1}\Phi_{2} < 0 $ </span>, then a cut point lies on the given edge. The coordinates of the cut point are given by: </p>
 
 	<div align="center" lang="latex">
 \begin{bmatrix} x \\ y \\ z \end{bmatrix}
