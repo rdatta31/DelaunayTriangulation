@@ -118,11 +118,57 @@ r = | \overrightarrow{AQ} | = | \overrightarrow{BQ} | = | \overrightarrow{CQ} |
 
 	<p>The cut points were first determined for the given cut cell from the level set values at the cell corners. The cut points were then triangulated to determine the local interface area  . The cut points are shown in the figure below.</p>
 
+	<p align="center"><img class = "figure" src="https://raw.githubusercontent.com/rdatta31/delaunaytriangulation/master/cut_points.png" alt="figure 1"/></p>
+
+	<p align="center">Cut points are determined from the level set values at cell corners</p>
+
 	<p>To triangulate a set of co-planar points in <span lang="latex">$R^{3}$</span>, the Divide and Conquer algorithm was used. The points to be triangulated were first sorted lexicologically, i.e. they were first sorted by x-coordinate, then by y-coordinate and then by z-coordinate. For a sharp interface, the interface cuts the cell at at most 4 points. These points are then divided into two subsets. Subset 1 contains the first two points after lexicological sorting, and the Subset 2 contains the remaining points. In each subset, the points are then connected separately. The two subsets are then merged. In order to merge the subsets, the low tangent is first identified. The low tangent connects the ``lowest'' points in each subset. The lowest points can be identified by sorting the points in each subset clockwise with respect to the plane normal, then starting form the first point in Subset 1, and moving anti-clockwise to the next point until the next point lies in Subset 2. Similarly, the lowest point in Subset 2 is identified by moving clockwise form the last point in Subset 2, until the next point lies in Subset 1. Given the geometry of the cut points, the low tangent can be determined by connecting the first point in Subset 1 to the point in Subset 2 which lies closest to it. </p>
+
 
 <p>On forming the low tangent, it is necessary to identify the third vertex to form a Delaunay triangle.  Of the two possible candidates for the third vertex, the candidate is chosen for which the new triangle and its circumcenter are empty, thus fulfilling the Delaunay criterion. The last point is then connected to the existing edge to create another triangle. The sum of the areas of each individual triangle is used to determine the interface area. </p>
 
 <p>For a given face, the maximum number of points to triangulate is 5 due to the geometry of the cut face. The aforementioned Divide and Conquer algorithm can be used for this purpose. In the case of five points, Subset 1 contains the first 3 points in lexicological order, while Subset 2 contains the remaining points. The points on the edge of the triangle in Subset 1 which should be used to form the low tangent can be determined by identifying the edge for which a potential low tangent does no intersect with any existing edges. The triangulation can then be continued as mention before. </p>
+
+<p align="center"><img class = "figure" src="https://raw.githubusercontent.com/rdatta31/delaunaytriangulation/master/cut1.png" alt="figure 1"/></p>
+
+	<p align="center">The points in each subset are connected separately</p>
+
+	<p align="center"><img class = "figure" src="https://raw.githubusercontent.com/rdatta31/delaunaytriangulation/master/cut2.png" alt="figure 1"/></p>
+
+	<p align="center">The low tangent is formed</p>
+
+		<p align="center"><img class = "figure" src="https://raw.githubusercontent.com/rdatta31/delaunaytriangulation/master/cut3.png" alt="figure 1"/></p>
+
+	<p align="center">The last point is connected to complete the triangulation</p>
+
+	
+	
+<p> The cell face apertures are determined using a similar approach. First, the cell corners are sorted lexicologically. The faces are then checked to see if they contain only the positive fluid , i.e. the number of face corners with positive level set value is 4. For a  face with only positive fluid, the cell face aperture is 1. For faces with the negative fluid, the cut points which lie in the face are determined. For a given cut point <i>P</i>, it lies on the given face if and only if the dot product of the vector connecting a point <i>Q</i> on the face to the cut point and the normal to the plane is zero. </p>
+
+<p>If the number of cut points on the face is zero, the cell face aperture is 0. If the number of cut points is non-zero, then the corners of the face with positive level set values is determined. These points are then triangulated to determine the area occupied by the positive fluid. The ratio of this area to the total area of the face is the cell face aperture for the given face. Triangulation to determine different apertures is shown below.</p>
+
+
+		<p align="center"><img class = "figure" src="https://raw.githubusercontent.com/rdatta31/delaunaytriangulation/master/1.png" alt="figure 1"/></p>
+
+	<p align="center">Triangulated Interface</p>
+
+			<p align="center"><img class = "figure" src="https://raw.githubusercontent.com/rdatta31/delaunaytriangulation/master/2.png" alt="figure 1"/></p>
+
+	<p align="center">Bottom face is triangulated to get A31</p>
+
+
+			<p align="center"><img class = "figure" src="https://raw.githubusercontent.com/rdatta31/delaunaytriangulation/master/3.png" alt="figure 1"/></p>
+
+	<p align="center">Bottom face is triangulated to get A12</p>
+
+
+			<p align="center"><img class = "figure" src="https://raw.githubusercontent.com/rdatta31/delaunaytriangulation/master/4.png" alt="figure 1"/></p>
+
+	<p align="center">South face is triangulated to get A21</p>
+
+			<p align="center"><img class = "figure" src="https://raw.githubusercontent.com/rdatta31/delaunaytriangulation/master/5.png" alt="figure 1"/></p>
+
+	<p align="center">North face is triangulated to get A22</p>
 
 	<h2> Implementation </h2>
 
